@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZeroDown | Modern Shopping</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+header{background:#101c35;color:white;padding:22px 7%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:25px;font-weight:bold}
+.logo span{color:#64a5ff}
+header button{background:#2563eb;color:white;border:0;padding:11px 18px;border-radius:7px}
+.hero{padding:65px 7%;background:linear-gradient(120deg,#102447,#2457a6);color:white}
+.hero h1{font-size:clamp(32px,5vw,52px);margin-bottom:15px}
+.hero p{color:#d8e5ff;font-size:17px}
+.container{padding:40px 7%}
+.section-title{margin-bottom:25px;font-size:26px}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:22px}
+.card{background:white;border-radius:12px;padding:17px;box-shadow:0 5px 20px #17203312}
+.product-image{height:145px;border-radius:9px;background:#eaf1ff;display:grid;place-items:center;font-size:60px;margin-bottom:17px}
+.card h3{margin-bottom:9px}
+.price{font-weight:bold;color:#2563eb;margin:12px 0}
+.card button{width:100%;padding:11px;border:0;border-radius:7px;background:#172f57;color:white;cursor:pointer}
+.status{margin-top:35px;padding:16px;background:white;border-radius:10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+footer{text-align:center;padding:25px;background:#101c35;color:#d5def0}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">Zero<span>Down</span></div>
+<button id="cart">Cart (0)</button>
+</header>
+<section class="hero">
+<h1>Discover More.<br>Shop Smarter.</h1>
+<p>Simple shopping. Reliable technology. A better experience.</p>
+</section>
+<main class="container">
+<h2 class="section-title">Featured Products</h2>
+<div class="products">
+<div class="card"><div class="product-image">🎧</div><h3>Wireless Headphones</h3><p>Immersive sound for every moment.</p><div class="price">₹1,499</div><button onclick="addToCart()">Add to Cart</button></div>
+<div class="card"><div class="product-image">⌚</div><h3>Smart Watch</h3><p>Stay connected throughout your day.</p><div class="price">₹2,299</div><button onclick="addToCart()">Add to Cart</button></div>
+<div class="card"><div class="product-image">🎒</div><h3>Urban Backpack</h3><p>Everyday style with practical storage.</p><div class="price">₹999</div><button onclick="addToCart()">Add to Cart</button></div>
+<div class="card"><div class="product-image">🔊</div><h3>Bluetooth Speaker</h3><p>Bring your favourite music anywhere.</p><div class="price">₹1,799</div><button onclick="addToCart()">Add to Cart</button></div>
+</div>
+<div class="status">
+<strong>ZeroDown Deployment Demo</strong>
+<span id="version">Loading version...</span>
+</div>
+</main>
+<footer>ZeroDown | Blue–Green Deployment Demonstration</footer>
+<script>
+let count=0;
+function addToCart(){count++;document.getElementById("cart").textContent=`Cart (${count})`;}
+fetch("/version").then(r=>r.json()).then(data=>{
+document.getElementById("version").textContent=`Application: ${data.version}`;
+}).catch(()=>document.getElementById("version").textContent="Version unavailable");
+</script>
+</body>
+</html>
