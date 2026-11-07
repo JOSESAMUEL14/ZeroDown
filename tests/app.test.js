@@ -1,4 +1,5 @@
-﻿const request = require("supertest");
+﻿
+const request = require("supertest");
 const app = require("../server");
 
 describe("ZeroDown Application Tests", () => {
@@ -17,5 +18,13 @@ describe("ZeroDown Application Tests", () => {
         const response = await request(app).get("/version");
         expect(response.statusCode).toBe(200);
         expect(response.body.version).toBe("v1");
+    });
+
+    test("Prometheus metrics endpoint should work", async () => {
+        const response = await request(app).get("/metrics");
+
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toContain("zerodown_http_requests_total");
+        expect(response.text).toContain("zerodown_http_request_duration_seconds");
     });
 });

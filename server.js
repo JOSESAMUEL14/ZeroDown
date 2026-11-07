@@ -1,11 +1,61 @@
 ﻿
 const express = require("express");
 const path = require("path");
+const client = require("prom-client");
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 const APP_VERSION = process.env.APP_VERSION || "v1";
+
+// Prometheus metrics
+const register = new client.Registry();
+
+register.setDefaultLabels({
+    application: "zerodown",
+    version: APP_VERSION
+});
+
+client.collectDefaultMetrics({ register });
+
+// HTTP request counter
+const httpRequests = new client.Counter({
+    name: "zerodown_http_requests_total",
+    help: "Total HTTP requests",
+    labelNames: ["method", "route", "status_code"],
+    registers: [register]
+});
+
+// HTTP request duration
+const httpDuration = new client.Histogram({
+    name: "zerodown_http_request_duration_seconds",
+    help: "HTTP request duration in seconds",
+    labelNames: ["method", "route", "status_code"],
+    registers: [register]
+});
+
+// Collect request metrics
+app.use((req, res, next) => {
+    const end = httpDuration.startTimer();
+
+    res.on("finish", () => {
+        const route = req.route?.path || req.path;
+
+        httpRequests.inc({
+            method: req.method,
+            route,
+            status_code: res.statusCode
+        });
+
+        end({
+            method: req.method,
+            route,
+            status_code: res.statusCode
+        });
+    });
+
+    next();
+});
 
 // Serve static frontend files
 app.use(express.static(path.join(__dirname, "public")));
@@ -23,6 +73,12 @@ app.get("/version", (req, res) => {
         application: "ZeroDown",
         version: APP_VERSION
     });
+});
+
+// Prometheus metrics endpoint
+app.get("/metrics", async (req, res) => {
+    res.set("Content-Type", register.contentType);
+    res.end(await register.metrics());
 });
 
 // Homepage
