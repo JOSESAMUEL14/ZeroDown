@@ -44,7 +44,7 @@ try {
     Write-Host "Starting port-forward..."
 
     $PortForward = Start-Process -FilePath "minikube.exe" `
-        -ArgumentList "kubectl -- port-forward service/zerodown-service 18081:80" `
+        -ArgumentList "kubectl -- port-forward service/zerodown-service 18083:80" `
         -PassThru -WindowStyle Hidden
 
     $Verified = $false
@@ -54,7 +54,7 @@ try {
         Start-Sleep -Seconds 1
 
         try {
-            $Response = Invoke-RestMethod "http://127.0.0.1:18081/version" -TimeoutSec 2
+            $Response = Invoke-RestMethod "http://127.0.0.1:18083/version" -TimeoutSec 2
 
             if ($Response.version -eq $Expected) {
                 $Verified = $true
