@@ -1,60 +1,2015 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZeroDown | Modern Shopping</title>
+<title>ZeroDown | Premium Tech Store</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
-header{background:#101c35;color:white;padding:22px 7%;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:25px;font-weight:bold}
-.logo span{color:#64a5ff}
-header button{background:#2563eb;color:white;border:0;padding:11px 18px;border-radius:7px}
-.hero{padding:65px 7%;background:linear-gradient(120deg,#102447,#2457a6);color:white}
-.hero h1{font-size:clamp(32px,5vw,52px);margin-bottom:15px}
-.hero p{color:#d8e5ff;font-size:17px}
-.container{padding:40px 7%}
-.section-title{margin-bottom:25px;font-size:26px}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:22px}
-.card{background:white;border-radius:12px;padding:17px;box-shadow:0 5px 20px #17203312}
-.product-image{height:145px;border-radius:9px;background:#eaf1ff;display:grid;place-items:center;font-size:60px;margin-bottom:17px}
-.card h3{margin-bottom:9px}
-.price{font-weight:bold;color:#2563eb;margin:12px 0}
-.card button{width:100%;padding:11px;border:0;border-radius:7px;background:#172f57;color:white;cursor:pointer}
-.status{margin-top:35px;padding:16px;background:white;border-radius:10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
-footer{text-align:center;padding:25px;background:#101c35;color:#d5def0}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --navy: #101b35;
+  --blue: #2864e8;
+  --blue-hover: #1d4fc4;
+  --light: #f5f7fc;
+  --card-bg: #ffffff;
+  --border: #e5e9f2;
+  --muted: #748097;
+  --white: #ffffff;
+  --success: #10b981;
+  --danger: #ef4444;
+  --amber: #f59e0b;
+}
+
+/* =========================
+   GREEN THEME — VERSION 2
+========================= */
+body.green-theme {
+  --navy: #073d2b;
+  --blue: #15965b;
+  --blue-hover: #0e7a48;
+}
+
+body.green-theme .topbar { background: #073d2b; }
+body.green-theme .logo span { color: #15965b; }
+body.green-theme .cart-btn,
+body.green-theme .newsletter button { background: #15965b; }
+body.green-theme .hero {
+  background: linear-gradient(110deg, #073d2b 0%, #08764a 65%, #19a66b 100%);
+}
+body.green-theme .eyebrow { color: #a9f5ce; }
+body.green-theme .shop-btn { color: #08764a; }
+body.green-theme .category.active,
+body.green-theme .category:hover {
+  background: #08764a;
+  border-color: #08764a;
+}
+body.green-theme .add-btn { background: #08764a; }
+body.green-theme .add-btn:hover { background: #15965b; }
+body.green-theme .newsletter { background: #e4f7ec; }
+body.green-theme .btn-primary { background: #15965b; }
+body.green-theme .btn-primary:hover { background: #0e7a48; }
+
+/* =========================
+   GENERAL STYLES & LAYOUT
+========================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--light);
+  color: var(--navy);
+  line-height: 1.5;
+}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+
+/* Topbar */
+.topbar {
+  background: #0c1630;
+  color: #d8e2f5;
+  text-align: center;
+  padding: 8px 16px;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  letter-spacing: .3px;
+}
+.version-pill {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .5px;
+}
+
+/* Header & Nav */
+header {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border);
+}
+.nav {
+  max-width: 1240px;
+  margin: auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.logo {
+  font: 800 26px 'Outfit', sans-serif;
+  letter-spacing: -1px;
+  white-space: nowrap;
+  color: var(--navy);
+  text-decoration: none;
+}
+.logo span { color: var(--blue); }
+.search { flex: 1; position: relative; max-width: 500px; }
+.search input {
+  width: 100%;
+  padding: 11px 16px 11px 40px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #f8f9fc;
+  outline: none;
+  transition: border-color .2s;
+}
+.search input:focus { border-color: var(--blue); background: #fff; }
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 16px;
+}
+.nav-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+.nav-btn {
+  border: 1px solid transparent;
+  background: #f1f4fa;
+  padding: 10px 16px;
+  border-radius: 9px;
+  color: var(--navy);
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all .2s;
+}
+.nav-btn:hover { background: #e5ebf5; }
+.cart-btn {
+  background: var(--blue);
+  color: white;
+}
+.cart-btn:hover { background: var(--blue-hover); color: white; }
+.badge {
+  background: white;
+  color: var(--navy);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+.cart-btn .badge { background: white; color: var(--blue); }
+
+/* Hero Section */
+.hero-wrap {
+  max-width: 1240px;
+  margin: 24px auto;
+  padding: 0 24px;
+}
+.hero {
+  border-radius: 20px;
+  padding: 56px 48px;
+  background: linear-gradient(110deg, #101b35 0%, #173e82 65%, #2864e8 100%);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+}
+.hero-content { max-width: 600px; }
+.eyebrow {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  color: #b8d2ff;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font: 800 clamp(32px, 4vw, 48px) 'Outfit', sans-serif;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.hero p { color: #d6e3f8; font-size: 17px; margin-bottom: 24px; }
+.shop-btn {
+  background: white;
+  color: var(--navy);
+  font-weight: 700;
+  border: 0;
+  padding: 13px 28px;
+  border-radius: 10px;
+  transition: transform .2s;
+}
+.shop-btn:hover { transform: translateY(-2px); }
+
+/* Container & Filter Bar */
+.container {
+  max-width: 1240px;
+  margin: 32px auto;
+  padding: 0 24px;
+}
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.categories { display: flex; gap: 10px; flex-wrap: wrap; }
+.category {
+  border: 1px solid var(--border);
+  background: white;
+  padding: 9px 18px;
+  border-radius: 20px;
+  color: var(--navy);
+  font-weight: 600;
+  font-size: 14px;
+  transition: all .2s;
+}
+.category.active, .category:hover {
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
+}
+.sort-select {
+  padding: 9px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: white;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  outline: none;
+}
+
+/* Products Grid */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform .2s, box-shadow .2s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(16, 27, 53, 0.08);
+}
+.card-img-wrap {
+  height: 200px;
+  background: #f8f9fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .3s;
+}
+.card:hover .card-img-wrap img { transform: scale(1.04); }
+.discount-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--danger);
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.wish-icon-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: white;
+  border: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--muted);
+  transition: transform .2s, color .2s;
+}
+.wish-icon-btn:hover { transform: scale(1.15); color: var(--danger); }
+.wish-icon-btn.active { color: var(--danger); }
+.card-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.card-category {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--navy);
+  cursor: pointer;
+}
+.card-title:hover { color: var(--blue); }
+.card-rating {
+  font-size: 12px;
+  color: #f59e0b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+.card-rating span { color: var(--muted); font-weight: 500; }
+.card-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: auto;
+  margin-bottom: 14px;
+}
+.card-price {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--navy);
+}
+.card-old-price {
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: line-through;
+}
+.card-stock {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.card-stock.in { color: var(--success); }
+.card-stock.low { color: var(--amber); }
+.card-stock.out { color: var(--danger); }
+.add-btn {
+  width: 100%;
+  padding: 11px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--navy);
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  transition: background .2s;
+}
+.add-btn:hover { background: var(--blue); }
+.add-btn:disabled {
+  background: #ccd2e0;
+  cursor: not-allowed;
+}
+
+/* Modals & Overlays */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(16, 27, 53, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.overlay.open { display: flex; }
+.modal-panel {
+  background: white;
+  border-radius: 18px;
+  max-width: 580px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  animation: modalIn .25s ease-out;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-title { font: 800 20px 'Outfit', sans-serif; color: var(--navy); }
+.close-modal-btn {
+  background: #f1f4fa;
+  border: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 16px;
+  color: var(--muted);
+}
+.close-modal-btn:hover { background: #e2e7f3; color: var(--navy); }
+.modal-body { padding: 24px; }
+
+/* Drawers (Cart & Wishlist) */
+.drawer-panel {
+  position: fixed;
+  top: 0;
+  right: -420px;
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  background: white;
+  box-shadow: -8px 0 30px rgba(0,0,0,0.15);
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  transition: right .3s ease-in-out;
+}
+.drawer-panel.open { right: 0; }
+.drawer-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+}
+.drawer-footer {
+  padding: 20px 24px;
+  border-top: 1px solid var(--border);
+  background: #fafbfe;
+}
+
+/* Forms & UI Controls */
+.form-group { margin-bottom: 16px; }
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.form-input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fdfdfe;
+  outline: none;
+}
+.form-input:focus { border-color: var(--blue); }
+.btn-primary {
+  width: 100%;
+  padding: 13px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--blue);
+  color: white;
+  font-weight: 700;
+  font-size: 15px;
+  transition: background .2s;
+}
+.btn-primary:hover { background: var(--blue-hover); }
+.btn-secondary {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: white;
+  color: var(--navy);
+  font-weight: 600;
+  margin-top: 10px;
+}
+.btn-secondary:hover { background: #f8f9fc; }
+.btn-danger {
+  background: #fee2e2;
+  color: var(--danger);
+  border: 0;
+  padding: 8px 14px;
+  border-radius: 7px;
+  font-weight: 700;
+  font-size: 13px;
+}
+.btn-danger:hover { background: #fecaca; }
+
+/* Tabs */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 12px;
+  border: 0;
+  background: none;
+  font-weight: 700;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+}
+.tab.active {
+  color: var(--blue);
+  border-bottom-color: var(--blue);
+}
+
+/* Cart & Wishlist Items List */
+.cart-item-row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.cart-item-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #f8f9fd;
+}
+.cart-item-info { flex: 1; }
+.cart-item-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+.cart-item-price { font-weight: 800; color: var(--navy); font-size: 14px; }
+.qty-controls {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+.qty-btn {
+  background: #f5f7fc;
+  border: 0;
+  width: 28px;
+  height: 28px;
+  font-weight: 700;
+}
+.qty-val { width: 32px; text-align: center; font-size: 13px; font-weight: 700; }
+.remove-btn {
+  background: none;
+  border: 0;
+  color: var(--danger);
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 12px;
+}
+
+/* Toast Container */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.toast {
+  background: var(--navy);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: toastIn .3s;
+}
+.toast.success { background: #065f46; border-left: 4px solid var(--success); }
+.toast.error { background: #7f1d1d; border-left: 4px solid var(--danger); }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Deployment Status Footer Bar */
+.status {
+  max-width: 1240px;
+  margin: 40px auto 20px;
+  padding: 14px 24px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 13px;
+}
+.status-label { font-weight: 700; color: var(--navy); }
+.version { font-weight: 800; color: var(--blue); }
+
+/* Newsletter & Footer */
+.newsletter {
+  max-width: 1240px;
+  margin: 40px auto;
+  padding: 48px 36px;
+  background: #edf3ff;
+  border-radius: 20px;
+  text-align: center;
+}
+.newsletter h2 { font: 800 28px 'Outfit', sans-serif; margin-bottom: 8px; }
+.newsletter p { color: var(--muted); margin-bottom: 20px; }
+.newsletter form {
+  display: flex;
+  max-width: 440px;
+  margin: auto;
+  gap: 10px;
+}
+.newsletter input {
+  flex: 1;
+  padding: 12px 18px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  outline: none;
+}
+.newsletter button {
+  background: var(--blue);
+  color: white;
+  border: 0;
+  padding: 12px 24px;
+  border-radius: 9px;
+  font-weight: 700;
+}
+footer {
+  background: #0c1630;
+  color: #c4d1eb;
+  padding: 48px 24px 32px;
+  margin-top: 60px;
+}
+.footer-inner {
+  max-width: 1240px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 32px;
+}
+.footer-logo { font: 800 24px 'Outfit', sans-serif; color: white; margin-bottom: 8px; }
+.footer-logo span { color: #64a5ff; }
+.footer-copy { text-align: center; margin-top: 24px; font-size: 13px; color: #8a9bbd; }
+
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Tracking Timeline */
+.timeline {
+  display: flex;
+  justify-content: space-between;
+  margin: 24px 0;
+  position: relative;
+}
+.timeline:before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 20px;
+  right: 20px;
+  height: 3px;
+  background: var(--border);
+  z-index: 1;
+}
+.timeline-step {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  flex: 1;
+}
+.timeline-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--border);
+  margin: auto auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--muted);
+}
+.timeline-step.completed .timeline-dot {
+  background: var(--success);
+  border-color: var(--success);
+  color: white;
+}
+.timeline-label { font-size: 12px; font-weight: 700; color: var(--navy); }
 </style>
 </head>
 <body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span>Free Express Delivery on all orders above ₹999</span>
+  <span class="version-pill" id="top-version-badge">ZeroDown</span>
+</div>
+
+<!-- HEADER / NAV -->
 <header>
-<div class="logo">Zero<span>Down</span></div>
-<button id="cart">Cart (0)</button>
+  <nav class="nav">
+    <a href="/" class="logo">Zero<span>Down.</span></a>
+
+    <div class="search">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="search-input" placeholder="Search headphones, smartwatches, gear..." aria-label="Search products">
+    </div>
+
+    <div class="nav-actions">
+      <button class="nav-btn" onclick="openWishlist()" aria-label="Wishlist">
+        <span>♥ Wishlist</span>
+        <span class="badge" id="wishlist-badge">0</span>
+      </button>
+
+      <button class="nav-btn cart-btn" onclick="openCart()" aria-label="Shopping Cart">
+        <span>👜 Bag</span>
+        <span class="badge" id="cart-badge">0</span>
+      </button>
+
+      <button class="nav-btn" id="account-btn" onclick="handleAccountClick()" aria-label="Account">
+        <span>👤 Sign In</span>
+      </button>
+    </div>
+  </nav>
 </header>
-<section class="hero">
-<h1>Discover More.<br>Shop Smarter.</h1>
-<p>Simple shopping. Reliable technology. A better experience.</p>
-</section>
-<main class="container">
-<h2 class="section-title">Featured Products</h2>
-<div class="products">
-<div class="card"><div class="product-image">🎧</div><h3>Wireless Headphones</h3><p>Immersive sound for every moment.</p><div class="price">₹1,499</div><button onclick="addToCart()">Add to Cart</button></div>
-<div class="card"><div class="product-image">⌚</div><h3>Smart Watch</h3><p>Stay connected throughout your day.</p><div class="price">₹2,299</div><button onclick="addToCart()">Add to Cart</button></div>
-<div class="card"><div class="product-image">🎒</div><h3>Urban Backpack</h3><p>Everyday style with practical storage.</p><div class="price">₹999</div><button onclick="addToCart()">Add to Cart</button></div>
-<div class="card"><div class="product-image">🔊</div><h3>Bluetooth Speaker</h3><p>Bring your favourite music anywhere.</p><div class="price">₹1,799</div><button onclick="addToCart()">Add to Cart</button></div>
+
+<!-- HERO -->
+<div class="hero-wrap">
+  <section class="hero">
+    <div class="hero-content">
+      <span class="eyebrow">Zero Downtime Blue–Green Architecture</span>
+      <h1>Discover More.<br>Shop Smarter.</h1>
+      <p>High-performance consumer tech with zero-downtime deployment resilience. Experience seamless upgrades.</p>
+      <button class="shop-btn" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Explore Collection ↓</button>
+    </div>
+  </section>
 </div>
-<div class="status">
-<strong>ZeroDown Deployment Demo</strong>
-<span id="version">Loading version...</span>
-</div>
+
+<!-- MAIN CATALOG -->
+<main class="container" id="catalog">
+  <div class="toolbar">
+    <div class="categories" id="category-pills">
+      <button class="category active" data-category="all" onclick="selectCategory('all', this)">All Products</button>
+    </div>
+
+    <div>
+      <select class="sort-select" id="sort-select" onchange="handleSortChange(this.value)">
+        <option value="">Sort: Featured</option>
+        <option value="price_asc">Price: Low to High</option>
+        <option value="price_desc">Price: High to Low</option>
+        <option value="rating_desc">Highest Rated</option>
+        <option value="newest">Newest Arrivals</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="products" id="product-grid">
+    <div class="empty">Loading products from catalogue...</div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <h2>A little more ZeroDown in your inbox.</h2>
+    <p>Get notified about new product drops, software updates, and deployment benchmarks.</p>
+    <form onsubmit="handleNewsletter(event)">
+      <input type="email" placeholder="Enter your email address" required aria-label="Email address">
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+
+  <!-- DEPLOYMENT MONITOR BAR -->
+  <div class="status">
+    <span class="status-label">⚙ ZeroDown Deployment Monitor</span>
+    <span class="version" id="version">Connecting to application cluster...</span>
+  </div>
 </main>
-<footer>ZeroDown | Blue–Green Deployment Demonstration</footer>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Zero<span>Down.</span></div>
+      <p>Blue–Green Deployment for a Containerized E-Commerce Application.</p>
+    </div>
+    <div>
+      <strong>INFRASTRUCTURE</strong>
+      <p>Node.js, Express, PostgreSQL</p>
+      <p>Docker & Kubernetes Engine</p>
+      <p>Prometheus & Grafana Telemetry</p>
+    </div>
+    <div>
+      <strong>DEMONSTRATION STORE</strong>
+      <p>© 2026 ZeroDown Engineering</p>
+      <p>Safe Mock Payment Flows</p>
+    </div>
+  </div>
+  <p class="footer-copy">ZeroDown Final-Year Engineering Project • Real-time Blue/Green Switching</p>
+</footer>
+
+<!-- ==============================================
+     MODALS & DRAWERS
+============================================== -->
+
+<!-- 1. CART DRAWER -->
+<div class="drawer-panel" id="cart-drawer">
+  <div class="drawer-header">
+    <h2 class="modal-title">Shopping Bag (<span id="cart-drawer-count">0</span>)</h2>
+    <button class="close-modal-btn" onclick="closeCart()">✕</button>
+  </div>
+  <div class="drawer-body" id="cart-drawer-items">
+    <div class="empty">Your shopping bag is empty.</div>
+  </div>
+  <div class="drawer-footer">
+    <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-weight:600; color:var(--muted);">
+      <span>Subtotal</span>
+      <span id="cart-subtotal">₹0</span>
+    </div>
+    <div style="display:flex; justify-content:space-between; margin-bottom:16px; font-size:18px; font-weight:800; color:var(--navy);">
+      <span>Total</span>
+      <span id="cart-total">₹0</span>
+    </div>
+    <button class="btn-primary" onclick="startCheckout()">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- 2. WISHLIST DRAWER -->
+<div class="drawer-panel" id="wishlist-drawer">
+  <div class="drawer-header">
+    <h2 class="modal-title">Saved Wishlist</h2>
+    <button class="close-modal-btn" onclick="closeWishlist()">✕</button>
+  </div>
+  <div class="drawer-body" id="wishlist-drawer-items">
+    <div class="empty">Your wishlist is empty.</div>
+  </div>
+</div>
+
+<!-- 3. PRODUCT DETAIL MODAL -->
+<div class="overlay" id="product-modal" onclick="if(event.target===this)closeProductModal()">
+  <div class="modal-panel" style="max-width: 680px;">
+    <div class="modal-header">
+      <span class="card-category" id="modal-product-cat">Category</span>
+      <button class="close-modal-btn" onclick="closeProductModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+        <img id="modal-product-img" src="" alt="Product" style="width: 260px; height: 260px; object-fit: cover; border-radius: 12px; background: #f8f9fd;">
+        <div style="flex: 1; min-width: 240px;">
+          <h2 class="modal-title" id="modal-product-name" style="margin-bottom: 8px;">Product Name</h2>
+          <div class="card-rating" id="modal-product-rating">★★★★★ <span>4.8</span></div>
+          <div class="card-price-row" style="margin-bottom: 12px;">
+            <span class="card-price" id="modal-product-price">₹0</span>
+            <span class="card-old-price" id="modal-product-old"></span>
+          </div>
+          <div class="card-stock" id="modal-product-stock">In Stock</div>
+          <p id="modal-product-desc" style="color: var(--muted); font-size: 14px; margin-bottom: 20px;">Description text.</p>
+
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <button class="btn-primary" id="modal-add-cart-btn" style="flex: 2;">＋ Add to Bag</button>
+            <button class="nav-btn" id="modal-wish-btn" style="flex: 1; justify-content: center;">♥ Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. AUTH MODAL (Sign In / Register) -->
+<div class="overlay" id="auth-modal" onclick="if(event.target===this)closeAuthModal()">
+  <div class="modal-panel" style="max-width: 440px;">
+    <div class="modal-header">
+      <h2 class="modal-title" id="auth-modal-title">Sign In to ZeroDown</h2>
+      <button class="close-modal-btn" onclick="closeAuthModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="tabs">
+        <button class="tab active" id="tab-login" onclick="switchAuthTab('login')">Sign In</button>
+        <button class="tab" id="tab-register" onclick="switchAuthTab('register')">Create Account</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" id="login-email" required placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="login-password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn-primary">Sign In</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="register-form" style="display:none;" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" id="reg-name" required placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" id="reg-email" required placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password (min 6 characters)</label>
+          <input type="password" class="form-input" id="reg-password" minlength="6" required placeholder="••••••••">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number (optional)</label>
+          <input type="tel" class="form-input" id="reg-phone" placeholder="9876543210">
+        </div>
+        <button type="submit" class="btn-primary">Create Account</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- 5. ACCOUNT DASHBOARD MODAL -->
+<div class="overlay" id="account-modal" onclick="if(event.target===this)closeAccountModal()">
+  <div class="modal-panel" style="max-width: 640px;">
+    <div class="modal-header">
+      <h2 class="modal-title">My Account</h2>
+      <button class="close-modal-btn" onclick="closeAccountModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="tabs">
+        <button class="tab active" id="tab-orders" onclick="switchAccountTab('orders')">Order History</button>
+        <button class="tab" id="tab-addresses" onclick="switchAccountTab('addresses')">Addresses</button>
+        <button class="tab" id="tab-profile" onclick="switchAccountTab('profile')">Profile</button>
+      </div>
+
+      <!-- Orders Tab -->
+      <div id="account-tab-orders">
+        <div id="orders-list"><div class="empty">Loading orders...</div></div>
+      </div>
+
+      <!-- Addresses Tab -->
+      <div id="account-tab-addresses" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <strong>Saved Delivery Addresses</strong>
+          <button class="nav-btn" onclick="toggleAddAddressForm()">＋ Add Address</button>
+        </div>
+
+        <form id="add-address-form" style="display:none; background:#f8f9fd; padding:16px; border-radius:10px; margin-bottom:16px;" onsubmit="handleSaveAddress(event)">
+          <div class="form-group">
+            <label class="form-label">Address Line 1</label>
+            <input type="text" class="form-input" id="addr-line1" required placeholder="Flat / House No., Street">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Address Line 2 (Optional)</label>
+            <input type="text" class="form-input" id="addr-line2" placeholder="Apartment, Landmark">
+          </div>
+          <div style="display:flex; gap:10px;">
+            <div class="form-group" style="flex:1;">
+              <label class="form-label">City</label>
+              <input type="text" class="form-input" id="addr-city" required placeholder="City">
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label class="form-label">State</label>
+              <input type="text" class="form-input" id="addr-state" required placeholder="State">
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label class="form-label">Postal Code</label>
+              <input type="text" class="form-input" id="addr-postal" required placeholder="560001">
+            </div>
+          </div>
+          <div style="margin-bottom:12px;">
+            <label><input type="checkbox" id="addr-default"> Set as default delivery address</label>
+          </div>
+          <button type="submit" class="btn-primary">Save Address</button>
+        </form>
+
+        <div id="addresses-list"><div class="empty">Loading saved addresses...</div></div>
+      </div>
+
+      <!-- Profile Tab -->
+      <div id="account-tab-profile" style="display:none;">
+        <form onsubmit="handleUpdateProfile(event)">
+          <div class="form-group">
+            <label class="form-label">Email Address (Read-Only)</label>
+            <input type="text" class="form-input" id="profile-email" disabled style="background:#eef1f6;">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-input" id="profile-name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-input" id="profile-phone">
+          </div>
+          <button type="submit" class="btn-primary">Save Profile Changes</button>
+        </form>
+        <button class="btn-secondary" style="margin-top:20px; color:var(--danger);" onclick="handleLogout()">Sign Out</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. CHECKOUT MODAL -->
+<div class="overlay" id="checkout-modal" onclick="if(event.target===this)closeCheckoutModal()">
+  <div class="modal-panel" style="max-width: 540px;">
+    <div class="modal-header">
+      <h2 class="modal-title">Checkout</h2>
+      <button class="close-modal-btn" onclick="closeCheckoutModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:#eaf1ff; padding:12px; border-radius:8px; font-size:13px; font-weight:600; color:#1e40af; margin-bottom:20px;">
+        ℹ Demonstration Checkout Flow — No actual credit card or real payment is processed.
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">1. Delivery Address</label>
+        <div id="checkout-address-selector">
+          <p class="empty" style="padding:10px;">Select from your saved addresses</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">2. Demo Payment Method</label>
+        <select class="form-input" id="checkout-payment-method">
+          <option value="demo_card">Credit / Debit Card (Simulation)</option>
+          <option value="demo_upi">UPI Fast Pay (Simulation)</option>
+          <option value="demo_cod">Cash on Delivery (Demo)</option>
+        </select>
+      </div>
+
+      <div style="background:#f8f9fd; padding:16px; border-radius:10px; margin-bottom:20px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:14px;">
+          <span>Items Subtotal:</span>
+          <span id="checkout-subtotal">₹0</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:14px; color:var(--success);">
+          <span>Delivery:</span>
+          <span>FREE</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-weight:800; font-size:18px; color:var(--navy); padding-top:8px; border-top:1px solid var(--border);">
+          <span>Grand Total:</span>
+          <span id="checkout-total">₹0</span>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="place-order-btn" onclick="submitCheckout()">Confirm & Place Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- 7. ORDER DETAILS & LIVE TRACKING MODAL -->
+<div class="overlay" id="order-modal" onclick="if(event.target===this)closeOrderModal()">
+  <div class="modal-panel" style="max-width: 600px;">
+    <div class="modal-header">
+      <div>
+        <h2 class="modal-title" id="order-modal-title">Order Details</h2>
+        <span style="font-size:12px; color:var(--muted);" id="order-modal-date">Date</span>
+      </div>
+      <button class="close-modal-btn" onclick="closeOrderModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="order-modal-version-tag" style="margin-bottom:14px;"></div>
+
+      <!-- Tracking Timeline -->
+      <div class="timeline" id="order-tracking-timeline"></div>
+
+      <!-- Items List -->
+      <h3 style="font-size:15px; font-weight:700; margin-bottom:10px;">Ordered Items</h3>
+      <div id="order-modal-items" style="border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:16px;"></div>
+
+      <div style="display:flex; justify-content:space-between; font-weight:800; font-size:16px; margin-bottom:20px;">
+        <span>Total Paid</span>
+        <span id="order-modal-total">₹0</span>
+      </div>
+
+      <div style="margin-bottom:20px; font-size:13px; color:var(--muted);" id="order-modal-address"></div>
+
+      <div id="order-modal-actions"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<!-- ==============================================
+     FRONTEND APPLICATION LOGIC
+============================================== -->
 <script>
-let count=0;
-function addToCart(){count++;document.getElementById("cart").textContent=`Cart (${count})`;}
-fetch("/version").then(r=>r.json()).then(data=>{
-document.getElementById("version").textContent=`Application: ${data.version}`;
-}).catch(()=>document.getElementById("version").textContent="Version unavailable");
+/* Global Application State */
+const state = {
+  token: localStorage.getItem("zerodown_jwt_token") || null,
+  user: null,
+  products: [],
+  categories: [],
+  activeCategory: "all",
+  search: "",
+  sort: "",
+  cart: { items: [], total: 0, itemCount: 0 },
+  wishlist: [],
+  addresses: []
+};
+
+const formatPrice = amount => "₹" + Number(amount || 0).toLocaleString("en-IN");
+
+/* Toast Notifications */
+function showToast(message, type = "normal") {
+  const container = document.getElementById("toast-container");
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span>●</span> <span>${message}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 4000);
+}
+
+/* Version Detection */
+let lastDetectedVersion = null;
+let versionCheckInProgress = false;
+
+async function loadApplicationVersion() {
+  if (versionCheckInProgress) return;
+
+  versionCheckInProgress = true;
+
+  const versionElement = document.getElementById("version");
+  const topBadge = document.getElementById("top-version-badge");
+
+  try {
+    const res = await fetch("/version", {
+      cache: "no-store"
+    });
+
+    if (!res.ok) throw new Error("Failed to reach /version");
+
+    const data = await res.json();
+    const ver = String(data.version || "").toLowerCase();
+
+    if (ver !== "v1" && ver !== "v2") {
+      throw new Error("Invalid deployment version");
+    }
+
+    if (ver !== lastDetectedVersion) {
+      lastDetectedVersion = ver;
+
+      if (ver === "v2") {
+        document.body.classList.add("green-theme");
+        versionElement.textContent = "● Application: V2 — GREEN DEPLOYMENT";
+        topBadge.textContent = "ZeroDown Green (v2)";
+      } else {
+        document.body.classList.remove("green-theme");
+        versionElement.textContent = "● Application: V1 — BLUE DEPLOYMENT";
+        topBadge.textContent = "ZeroDown Blue (v1)";
+      }
+    }
+  } catch (err) {
+    versionElement.textContent = "Deployment monitor unavailable";
+  } finally {
+    versionCheckInProgress = false;
+  }
+}
+
+
+/* Authentication Handlers */
+async function checkAuth() {
+  if (!state.token) {
+    updateAuthUI(null);
+    return;
+  }
+  try {
+    const res = await fetch("/api/v1/auth/me", {
+      headers: { "Authorization": `Bearer ${state.token}` }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      state.user = data.customer;
+      updateAuthUI(state.user);
+      loadCart();
+      loadWishlist();
+      loadAddresses();
+    } else {
+      logoutClean();
+    }
+  } catch (err) {
+    console.error("Auth check failed:", err);
+  }
+}
+
+function updateAuthUI(user) {
+  const btn = document.getElementById("account-btn");
+  if (user) {
+    btn.innerHTML = `<span>👤 Hi, ${user.full_name.split(" ")[0]} ▾</span>`;
+  } else {
+    btn.innerHTML = `<span>👤 Sign In</span>`;
+  }
+}
+
+function handleAccountClick() {
+  if (state.user) {
+    openAccountModal();
+  } else {
+    openAuthModal();
+  }
+}
+
+async function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById("login-email").value.trim();
+  const password = document.getElementById("login-password").value;
+  try {
+    const res = await fetch("/api/v1/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Login failed");
+
+    state.token = data.token;
+    localStorage.setItem("zerodown_jwt_token", data.token);
+    state.user = data.customer;
+    updateAuthUI(state.user);
+    closeAuthModal();
+    showToast(`Welcome back, ${state.user.full_name}!`, "success");
+    loadCart();
+    loadWishlist();
+    loadAddresses();
+  } catch (err) {
+    showToast(err.message, "error");
+  }
+}
+
+async function handleRegister(e) {
+  e.preventDefault();
+  const full_name = document.getElementById("reg-name").value.trim();
+  const email = document.getElementById("reg-email").value.trim();
+  const password = document.getElementById("reg-password").value;
+  const phone = document.getElementById("reg-phone").value.trim();
+  try {
+    const res = await fetch("/api/v1/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ full_name, email, password, phone })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Registration failed");
+
+    state.token = data.token;
+    localStorage.setItem("zerodown_jwt_token", data.token);
+    state.user = data.customer;
+    updateAuthUI(state.user);
+    closeAuthModal();
+    showToast("Account created successfully!", "success");
+    loadCart();
+    loadWishlist();
+    loadAddresses();
+  } catch (err) {
+    showToast(err.message, "error");
+  }
+}
+
+function handleLogout() {
+  logoutClean();
+  closeAccountModal();
+  showToast("You have been signed out.");
+}
+
+function logoutClean() {
+  state.token = null;
+  state.user = null;
+  localStorage.removeItem("zerodown_jwt_token");
+  updateAuthUI(null);
+  state.cart = { items: [], total: 0, itemCount: 0 };
+  state.wishlist = [];
+  renderCart();
+  renderWishlist();
+}
+
+/* Categories & Product Catalogue */
+async function loadCategories() {
+  try {
+    const res = await fetch("/api/v1/categories");
+    if (!res.ok) return;
+    const data = await res.json();
+    state.categories = data.categories || [];
+
+    const container = document.getElementById("category-pills");
+    container.innerHTML = `
+      <button class="category ${state.activeCategory === 'all' ? 'active' : ''}" data-category="all" onclick="selectCategory('all', this)">All Products</button>
+    ` + state.categories.map(c => `
+      <button class="category ${state.activeCategory === c.slug ? 'active' : ''}" data-category="${c.slug}" onclick="selectCategory('${c.slug}', this)">${c.name}</button>
+    `).join("");
+  } catch (err) {
+    console.error("Failed to load categories:", err);
+  }
+}
+
+function selectCategory(slug, btn) {
+  state.activeCategory = slug;
+  document.querySelectorAll(".category").forEach(b => b.classList.toggle("active", b === btn));
+  loadProducts();
+}
+
+function handleSortChange(sortVal) {
+  state.sort = sortVal;
+  loadProducts();
+}
+
+let searchDebounce = null;
+document.getElementById("search-input").addEventListener("input", e => {
+  clearTimeout(searchDebounce);
+  searchDebounce = setTimeout(() => {
+    state.search = e.target.value.trim();
+    loadProducts();
+  }, 250);
+});
+
+async function loadProducts() {
+  const grid = document.getElementById("product-grid");
+  grid.innerHTML = '<div class="empty">Updating catalogue...</div>';
+
+  try {
+    const params = new URLSearchParams();
+    if (state.activeCategory && state.activeCategory !== "all") {
+      params.append("category", state.activeCategory);
+    }
+    if (state.search) params.append("search", state.search);
+    if (state.sort) params.append("sort", state.sort);
+
+    const res = await fetch(`/api/v1/products?${params.toString()}`);
+    if (!res.ok) throw new Error("Could not fetch products");
+    const data = await res.json();
+    state.products = data.products || [];
+
+    if (state.products.length === 0) {
+      grid.innerHTML = '<div class="empty">No products found matching your search.</div>';
+      return;
+    }
+
+    grid.innerHTML = state.products.map(p => {
+      const discount = p.old_price && p.old_price > p.price
+        ? Math.round((1 - p.price / p.old_price) * 100)
+        : null;
+      const isWish = state.wishlist.some(w => w.product_id === p.id);
+      const stockBadge = p.stock_quantity > 5
+        ? `<div class="card-stock in">● In Stock (${p.stock_quantity})</div>`
+        : p.stock_quantity > 0
+          ? `<div class="card-stock low">● Low Stock (Only ${p.stock_quantity} left)</div>`
+          : `<div class="card-stock out">● Out of Stock</div>`;
+
+      return `
+        <article class="card">
+          ${discount ? `<span class="discount-badge">${discount}% OFF</span>` : ''}
+          <button class="wish-icon-btn ${isWish ? 'active' : ''}" onclick="toggleWishlistItem(${p.id}, event)" aria-label="Save to Wishlist">♥</button>
+          <div class="card-img-wrap" onclick="openProductModal(${p.id})">
+            <img src="${p.image_url}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=700&auto=format&fit=crop'">
+          </div>
+          <div class="card-body">
+            <span class="card-category">${p.category_name || 'Electronics'}</span>
+            <h3 class="card-title" onclick="openProductModal(${p.id})">${p.name}</h3>
+            <div class="card-rating">★★★★★ <span>${p.rating || '4.8'} (${p.review_count || 120})</span></div>
+            <div class="card-price-row">
+              <span class="card-price">${formatPrice(p.price)}</span>
+              ${p.old_price ? `<span class="card-old-price">${formatPrice(p.old_price)}</span>` : ''}
+            </div>
+            ${stockBadge}
+            <button class="add-btn" onclick="addToCart(${p.id})" ${p.stock_quantity === 0 ? 'disabled' : ''}>
+              ${p.stock_quantity === 0 ? 'Out of Stock' : '＋ Add to Bag'}
+            </button>
+          </div>
+        </article>
+      `;
+    }).join("");
+  } catch (err) {
+    grid.innerHTML = '<div class="empty">Unable to load catalogue. Please check connection.</div>';
+  }
+}
+
+/* Product Detail Modal */
+function openProductModal(productId) {
+  const p = state.products.find(item => item.id === productId);
+  if (!p) return;
+
+  document.getElementById("modal-product-cat").textContent = p.category_name || "Tech";
+  document.getElementById("modal-product-name").textContent = p.name;
+  document.getElementById("modal-product-img").src = p.image_url;
+  document.getElementById("modal-product-rating").innerHTML = `★★★★★ <span>${p.rating || '4.8'} (${p.review_count || 120} reviews)</span>`;
+  document.getElementById("modal-product-price").textContent = formatPrice(p.price);
+  document.getElementById("modal-product-old").textContent = p.old_price ? formatPrice(p.old_price) : "";
+  document.getElementById("modal-product-desc").textContent = p.description || "Premium consumer electronics.";
+
+  const stockEl = document.getElementById("modal-product-stock");
+  stockEl.textContent = p.stock_quantity > 0 ? `In Stock (${p.stock_quantity} available)` : "Out of Stock";
+  stockEl.className = "card-stock " + (p.stock_quantity > 5 ? "in" : p.stock_quantity > 0 ? "low" : "out");
+
+  const addBtn = document.getElementById("modal-add-cart-btn");
+  addBtn.onclick = () => { addToCart(p.id); closeProductModal(); };
+  addBtn.disabled = p.stock_quantity === 0;
+
+  const wishBtn = document.getElementById("modal-wish-btn");
+  const isWish = state.wishlist.some(w => w.product_id === p.id);
+  wishBtn.innerHTML = isWish ? "♥ Saved" : "♥ Save to Wishlist";
+  wishBtn.onclick = () => { toggleWishlistItem(p.id); closeProductModal(); };
+
+  document.getElementById("product-modal").classList.add("open");
+}
+function closeProductModal() { document.getElementById("product-modal").classList.remove("open"); }
+
+/* Shopping Cart API Integration */
+async function loadCart() {
+  if (!state.token) return;
+  try {
+    const res = await fetch("/api/v1/cart", {
+      headers: { "Authorization": `Bearer ${state.token}` }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      state.cart = data.cart || { items: [], total: 0, itemCount: 0 };
+      renderCart();
+    }
+  } catch (err) {
+    console.error("Cart fetch error:", err);
+  }
+}
+
+function renderCart() {
+  const count = state.cart.itemCount || 0;
+  document.getElementById("cart-badge").textContent = count;
+  document.getElementById("cart-drawer-count").textContent = count;
+  document.getElementById("cart-subtotal").textContent = formatPrice(state.cart.subtotal);
+  document.getElementById("cart-total").textContent = formatPrice(state.cart.total);
+
+  const container = document.getElementById("cart-drawer-items");
+  if (!state.cart.items || state.cart.items.length === 0) {
+    container.innerHTML = '<div class="empty">Your shopping bag is empty.</div>';
+    return;
+  }
+
+  container.innerHTML = state.cart.items.map(i => `
+    <div class="cart-item-row">
+      <img src="${i.image_url}" alt="${i.name}" class="cart-item-img">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${i.name}</div>
+        <div class="cart-item-price">${formatPrice(i.price)}</div>
+        <div style="display:flex; align-items:center;">
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="updateCartQty('${i.id}', ${i.quantity - 1})">−</button>
+            <span class="qty-val">${i.quantity}</span>
+            <button class="qty-btn" onclick="updateCartQty('${i.id}', ${i.quantity + 1})">＋</button>
+          </div>
+          <button class="remove-btn" onclick="removeCartItem('${i.id}')">Remove</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+async function addToCart(productId) {
+  if (!state.token) {
+    openAuthModal();
+    showToast("Please sign in to add items to your shopping bag.");
+    return;
+  }
+
+  try {
+    const res = await fetch("/api/v1/cart/items", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${state.token}`
+      },
+      body: JSON.stringify({ product_id: productId, quantity: 1 })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Could not add item to bag");
+
+    showToast("Added to your shopping bag!", "success");
+    loadCart();
+  } catch (err) {
+    showToast(err.message, "error");
+  }
+}
+
+async function updateCartQty(cartItemId, newQty) {
+  if (newQty < 1) {
+    removeCartItem(cartItemId);
+    return;
+  }
+  try {
+    const res = await fetch(`/api/v1/cart/items/${cartItemId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${state.token}`
+      },
+      body: JSON.stringify({ quantity: newQty })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Could not update quantity");
+    loadCart();
+  } catch (err) {
+    showToast(err.message, "error");
+  }
+}
+
+async function removeCartItem(cartItemId) {
+  try {
+    const res = await fetch(`/api/v1/cart/items/${cartItemId}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${state.token}` }
+    });
+    if (res.ok) {
+      showToast("Item removed from bag");
+      loadCart();
+    }
+  } catch (err) {
+    showToast("Failed to remove item", "error");
+  }
+}
+
+function openCart() { document.getElementById("cart-drawer").classList.add("open"); }
+function closeCart() { document.getElementById("cart-drawer").classList.remove("open"); }
+
+/* Wishlist API Integration */
+async function loadWishlist() {
+  if (!state.token) return;
+  try {
+    const res = await fetch("/api/v1/wishlist", {
+      headers: { "Authorization": `Bearer ${state.token}` }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      state.wishlist = data.wishlist?.items || [];
+      renderWishlist();
+    }
+  } catch (err) {
+    console.error("Wishlist fetch error:", err);
+  }
+}
+
+function renderWishlist() {
+  document.getElementById("wishlist-badge").textContent = state.wishlist.length;
+  const container = document.getElementById("wishlist-drawer-items");
+  if (!state.wishlist || state.wishlist.length === 0) {
+    container.innerHTML = '<div class="empty">Your wishlist is empty.</div>';
+    return;
+  }
+
+  container.innerHTML = state.wishlist.map(w => `
+    <div class="cart-item-row">
+      <img src="${w.image_url}" alt="${w.name}" class="cart-item-img">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${w.name}</div>
+        <div class="cart-item-price">${formatPrice(w.price)}</div>
+        <div style="display:flex; gap:10px; margin-top:8px;">
+          <button class="nav-btn" style="padding:6px 12px; font-size:12px;" onclick="addToCart(${w.product_id}); removeWishlistItem(${w.product_id});">＋ Move to Bag</button>
+          <button class="remove-btn" onclick="removeWishlistItem(${w.product_id})">Remove</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+async function toggleWishlistItem(productId, event) {
+  if (event) event.stopPropagation();
+  if (!state.token) {
+    openAuthModal();
+    showToast("Please sign in to save items to your wishlist.");
+    return;
+  }
+
+  const existing = state.wishlist.find(w => w.product_id === productId);
+  if (existing) {
+    removeWishlistItem(productId);
+  } else {
+    try {
+      const res = await fetch("/api/v1/wishlist/items", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${state.token}`
+        },
+        body: JSON.stringify({ product_id: productId })
+      });
+      if (res.ok) {
+        showToast("Added to your wishlist!", "success");
+        loadWishlist();
+        loadProducts();
+      }
+    } catch (err) {
+      showToast("Could not add to wishlist", "error");
+    }
+  }
+}
+
+async function removeWishlistItem(productId) {
+  try {
+    const res = await fetch(`/api/v1/wishlist/items/${productId}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${state.token}` }
+    });
+    if (res.ok) {
+      showToast("Removed from wishlist");
+      loadWishlist();
+      loadProducts();
+    }
+  } catch (err) {
+    showToast("Failed to remove item", "error");
+  }
+}
+
+function openWishlist() { document.getElementById("wishlist-drawer").classList.add("open"); }
+function closeWishlist() { document.getElementById("wishlist-drawer").classList.remove("open"); }
+
+/* Delivery Addresses */
+async function loadAddresses() {
+  if (!state.token) return;
+  try {
+    const res = await fetch("/api/v1/customers/addresses", {
+      headers: { "Authorization": `Bearer ${state.token}` }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      state.addresses = data.addresses || [];
+      renderAddresses();
+      renderCheckoutAddresses();
+    }
+  } catch (err) {
+    console.error("Fetch addresses error:", err);
+  }
+}
+
+function renderAddresses() {
+  const container = document.getElementById("addresses-list");
+  if (state.addresses.length === 0) {
+    container.innerHTML = '<div class="empty">No saved addresses yet.</div>';
+    return;
+  }
+
+  container.innerHTML = state.addresses.map(a => `
+    <div style="background:#f8f9fd; border:1px solid var(--border); padding:14px; border-radius:10px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <div style="font-weight:700;">${a.address_line1} ${a.address_line2 ? ', ' + a.address_line2 : ''}</div>
+        <div style="font-size:13px; color:var(--muted);">${a.city}, ${a.state} - ${a.postal_code} (${a.country})</div>
+        ${a.is_default ? '<span style="font-size:11px; background:#d1fae5; color:#065f46; font-weight:700; padding:2px 8px; border-radius:4px;">DEFAULT</span>' : ''}
+      </div>
+      <button class="remove-btn" onclick="deleteAddress('${a.id}')">Delete</button>
+    </div>
+  `).join("");
+}
+
+function toggleAddAddressForm() {
+  const form = document.getElementById("add-address-form");
+  form.style.display = form.style.display === "none" ? "block" : "none";
+}
+
+async function handleSaveAddress(e) {
+  e.preventDefault();
+  const address_line1 = document.getElementById("addr-line1").value.trim();
+  const address_line2 = document.getElementById("addr-line2").value.trim();
+  const city = document.getElementById("addr-city").value.trim();
+  const stateVal = document.getElementById("addr-state").value.trim();
+  const postal_code = document.getElementById("addr-postal").value.trim();
+  const is_default = document.getElementById("addr-default").checked;
+
+  try {
+    const res = await fetch("/api/v1/customers/addresses", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${state.token}`
+      },
+      body: JSON.stringify({ address_line1, address_line2, city, state: stateVal, postal_code, is_default })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Could not save address");
+
+    showToast("Address saved!", "success");
+    e.target.reset();
+    toggleAddAddressForm();
+    loadAddresses();
+  } catch (err) {
+    showToast(err.message, "error");
+  }
+}
+
+async function deleteAddress(addressId) {
+  try {
+    const res = await fetch(`/api/v1/customers/addresses/${addressId}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${state.token}` }
+    });
+    if (res.ok) {
+      showToast("Address deleted");
+      loadAddresses();
+    }
+  } catch (err) {
+    showToast("Could not delete address", "error");
+  }
+}
+
+/* Profile Updates */
+async function handleUpdateProfile(e) {
+  e.preventDefault();
+  const full_name = document.getElementById("profile-name").value.trim();
+  const phone = document.getElementById("profile-phone").value.trim();
+
+  try {
+    const res = await fetch("/api/v1/customers/profile", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${state.token}`
+      },
+      body: JSON.stringify({ full_name, phone })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Could not update profile");
+
+    state.user = data.customer;
+    updateAuthUI(state.user);
+    showToast("Profile updated successfully!", "success");
+  } catch (err) {
+    showToast(err.message, "error");
+  }
+}
+
+/* Checkout & Order APIs */
+function startCheckout() {
+  closeCart();
+  if (!state.token) {
+    openAuthModal();
+    showToast("Please sign in to proceed with checkout.");
+    return;
+  }
+  if (!state.cart.items || state.cart.items.length === 0) {
+    showToast("Your shopping bag is empty.");
+    return;
+  }
+
+  document.getElementById("checkout-subtotal").textContent = formatPrice(state.cart.subtotal);
+  document.getElementById("checkout-total").textContent = formatPrice(state.cart.total);
+  renderCheckoutAddresses();
+  document.getElementById("checkout-modal").classList.add("open");
+}
+function closeCheckoutModal() { document.getElementById("checkout-modal").classList.remove("open"); }
+
+function renderCheckoutAddresses() {
+  const container = document.getElementById("checkout-address-selector");
+  if (state.addresses.length === 0) {
+    container.innerHTML = `
+      <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">No saved address found.</p>
+      <button class="nav-btn" type="button" onclick="closeCheckoutModal(); openAccountModal(); switchAccountTab('addresses');">＋ Add Delivery Address in Account</button>
+    `;
+    return;
+  }
+
+  container.innerHTML = state.addresses.map((a, idx) => `
+    <label style="display:flex; align-items:flex-start; gap:10px; background:#f8f9fd; padding:12px; border-radius:8px; margin-bottom:8px; cursor:pointer;">
+      <input type="radio" name="checkout_addr" value="${a.id}" ${idx === 0 || a.is_default ? 'checked' : ''} style="margin-top:4px;">
+      <div style="font-size:13px;">
+        <strong>${a.address_line1}</strong>, ${a.city}, ${a.state} (${a.postal_code})
+      </div>
+    </label>
+  `).join("");
+}
+
+async function submitCheckout() {
+  const selectedAddr = document.querySelector('input[name="checkout_addr"]:checked');
+  if (!selectedAddr) {
+    showToast("Please add or select a delivery address.", "error");
+    return;
+  }
+
+  const payment_method = document.getElementById("checkout-payment-method").value;
+  const btn = document.getElementById("place-order-btn");
+  btn.disabled = true;
+  btn.textContent = "Processing Order...";
+
+  try {
+    const res = await fetch("/api/v1/orders/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${state.token}`
+      },
+      body: JSON.stringify({
+        address_id: selectedAddr.value,
+        payment_method
+      })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Checkout failed");
+
+    closeCheckoutModal();
+    showToast("Order placed successfully!", "success");
+    loadCart();
+    loadProducts();
+    openOrderModal(data.order.id);
+  } catch (err) {
+    showToast(err.message, "error");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Confirm & Place Order";
+  }
+}
+
+/* Order History & Tracking */
+async function loadOrders() {
+  if (!state.token) return;
+  const container = document.getElementById("orders-list");
+  container.innerHTML = '<div class="empty">Loading your orders...</div>';
+
+  try {
+    const res = await fetch("/api/v1/orders", {
+      headers: { "Authorization": `Bearer ${state.token}` }
+    });
+    if (!res.ok) throw new Error("Could not fetch orders");
+    const data = await res.json();
+    const orders = data.orders || [];
+
+    if (orders.length === 0) {
+      container.innerHTML = '<div class="empty">You have not placed any orders yet.</div>';
+      return;
+    }
+
+    container.innerHTML = orders.map(o => {
+      const date = new Date(o.created_at).toLocaleDateString("en-IN", {
+        day: "numeric", month: "short", year: "numeric"
+      });
+      const statusColor = o.status === "cancelled" ? "var(--danger)" : o.status === "delivered" ? "var(--success)" : "var(--amber)";
+
+      return `
+        <div style="background:#f8f9fd; border:1px solid var(--border); padding:16px; border-radius:12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <div style="font-weight:800; color:var(--navy);">Order #${o.id.slice(0, 8).toUpperCase()}</div>
+            <div style="font-size:12px; color:var(--muted);">${date} • ${o.total_items} items • Deployed on ${o.deployed_version.toUpperCase()}</div>
+            <div style="font-weight:700; color:${statusColor}; font-size:13px; text-transform:capitalize; margin-top:4px;">● ${o.status}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-weight:800; font-size:16px;">${formatPrice(o.total_amount)}</div>
+            <button class="nav-btn" style="margin-top:6px; padding:6px 12px; font-size:12px;" onclick="closeAccountModal(); openOrderModal('${o.id}')">View Tracking →</button>
+          </div>
+        </div>
+      `;
+    }).join("");
+  } catch (err) {
+    container.innerHTML = '<div class="empty">Unable to load orders.</div>';
+  }
+}
+
+async function openOrderModal(orderId) {
+  try {
+    const res = await fetch(`/api/v1/orders/${orderId}`, {
+      headers: { "Authorization": `Bearer ${state.token}` }
+    });
+    if (!res.ok) throw new Error("Order details unavailable");
+    const data = await res.json();
+    const o = data.order;
+
+    document.getElementById("order-modal-title").textContent = `Order #${o.id.slice(0, 8).toUpperCase()}`;
+    document.getElementById("order-modal-date").textContent = new Date(o.created_at).toLocaleString("en-IN");
+    document.getElementById("order-modal-total").textContent = formatPrice(o.total_amount);
+
+    document.getElementById("order-modal-version-tag").innerHTML = `
+      <span style="font-size:11px; font-weight:800; background:#e0e7ff; color:#3730a3; padding:3px 10px; border-radius:12px;">
+        DEPLOYMENT: ${o.deployed_version.toUpperCase()}
+      </span>
+      <span style="font-size:11px; font-weight:800; margin-left:8px; text-transform:uppercase; color:${o.status==='cancelled'?'var(--danger)':'var(--success)'};">
+        STATUS: ${o.status}
+      </span>
+    `;
+
+    // Render Timeline
+    const timeline = o.tracking?.timeline || [];
+    document.getElementById("order-tracking-timeline").innerHTML = timeline.map(step => `
+      <div class="timeline-step ${step.completed ? 'completed' : ''}">
+        <div class="timeline-dot">${step.completed ? '✓' : '•'}</div>
+        <div class="timeline-label">${step.stage}</div>
+      </div>
+    `).join("");
+
+    // Render Items
+    document.getElementById("order-modal-items").innerHTML = (o.items || []).map(item => `
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px;">
+        <span>${item.product_name} × <strong>${item.quantity}</strong></span>
+        <span>${formatPrice(item.subtotal)}</span>
+      </div>
+    `).join("");
+
+    // Address
+    const addr = o.shipping_address || {};
+    document.getElementById("order-modal-address").innerHTML = `
+      <strong>Delivery Destination:</strong><br>
+      ${addr.address_line1 || ''}, ${addr.city || ''}, ${addr.state || ''} - ${addr.postal_code || ''}
+    `;
+
+    // Cancellation Action
+    const actionEl = document.getElementById("order-modal-actions");
+    if (o.status === "pending" || o.status === "processing") {
+      actionEl.innerHTML = `
+        <button class="btn-danger" style="width:100%;" onclick="handleCancelOrder('${o.id}')">Cancel Order & Restore Inventory</button>
+      `;
+    } else {
+      actionEl.innerHTML = "";
+    }
+
+    document.getElementById("order-modal").classList.add("open");
+  } catch (err) {
+    showToast(err.message, "error");
+  }
+}
+function closeOrderModal() { document.getElementById("order-modal").classList.remove("open"); }
+
+async function handleCancelOrder(orderId) {
+  if (!confirm("Are you sure you want to cancel this order? Inventory will be immediately restored.")) return;
+  try {
+    const res = await fetch(`/api/v1/orders/${orderId}/cancel`, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${state.token}` }
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Could not cancel order");
+
+    showToast("Order cancelled and stock restored", "success");
+    openOrderModal(orderId);
+    loadProducts();
+  } catch (err) {
+    showToast(err.message, "error");
+  }
+}
+
+/* Modals Navigation & Tabs */
+function openAuthModal() { document.getElementById("auth-modal").classList.add("open"); }
+function closeAuthModal() { document.getElementById("auth-modal").classList.remove("open"); }
+function switchAuthTab(tab) {
+  document.getElementById("tab-login").classList.toggle("active", tab === "login");
+  document.getElementById("tab-register").classList.toggle("active", tab === "register");
+  document.getElementById("login-form").style.display = tab === "login" ? "block" : "none";
+  document.getElementById("register-form").style.display = tab === "register" ? "block" : "none";
+}
+
+function openAccountModal() {
+  document.getElementById("profile-name").value = state.user?.full_name || "";
+  document.getElementById("profile-email").value = state.user?.email || "";
+  document.getElementById("profile-phone").value = state.user?.phone || "";
+  loadOrders();
+  document.getElementById("account-modal").classList.add("open");
+}
+function closeAccountModal() { document.getElementById("account-modal").classList.remove("open"); }
+function switchAccountTab(tab) {
+  ["orders", "addresses", "profile"].forEach(t => {
+    document.getElementById(`tab-${t}`).classList.toggle("active", t === tab);
+    document.getElementById(`account-tab-${t}`).style.display = t === tab ? "block" : "none";
+  });
+}
+
+function handleNewsletter(e) {
+  e.preventDefault();
+  showToast("Thank you for subscribing to ZeroDown updates!", "success");
+  e.target.reset();
+}
+
+/* Bootstrap on Load */
+window.addEventListener("DOMContentLoaded", () => {
+  loadApplicationVersion();
+  loadCategories();
+  loadProducts();
+  checkAuth();
+});
 </script>
+
 </body>
 </html>

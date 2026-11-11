@@ -1,24 +1,34 @@
 {
-  "name": "zerodown",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
-  "scripts": {
-    "test": "jest --runInBand"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "express": "^5.3.0",
-    "prom-client": "^15.1.3"
-  },
-  "devDependencies": {
-    "jest": "^30.5.2",
-    "supertest": "^7.3.2"
-  }
+    "name":  "zerodown",
+    "version":  "1.0.0",
+    "description":  "",
+    "main":  "index.js",
+    "directories":  {
+                        "test":  "tests"
+                    },
+    "scripts":  {
+                    "test":  "jest --runInBand"
+                },
+    "keywords":  [
+
+                 ],
+    "author":  "",
+    "license":  "ISC",
+    "type":  "commonjs",
+    "dependencies":  {
+                         "bcryptjs":  "^3.0.3",
+                         "express":  "^5.3.0",
+                         "jsonwebtoken":  "^9.0.3",
+                         "pg":  "^8.23.1",
+                         "prom-client":  "^15.1.3"
+                     },
+    "devDependencies":  {
+                            "jest":  "^30.5.2",
+                            "supertest":  "^7.3.2"
+                        },
+    "jest":  {
+                 "setupFiles":  [
+                                    "\u003crootDir\u003e/tests/jest.setup.js"
+                                ]
+             }
 }

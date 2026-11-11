@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZeroDown | Monitoring</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1120;color:#e5e7eb;font-family:Arial,sans-serif}
+header{padding:22px 5%;background:#111c30;border-bottom:1px solid #26344c;display:flex;justify-content:space-between;align-items:center}
+h1{font-size:23px;margin:0}
+small{color:#94a3b8}
+main{max-width:1200px;margin:30px auto;padding:0 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:#142138;border:1px solid #263852;border-radius:12px;padding:22px}
+.card p{color:#94a3b8;margin:0 0 14px}
+.value{font-size:29px;font-weight:bold;overflow-wrap:anywhere}
+.green{color:#4ade80}
+.blue{color:#60a5fa}
+.yellow{color:#facc15}
+section{margin-top:22px}
+a{color:#60a5fa;text-decoration:none}
+button{background:#2563eb;color:white;border:0;padding:10px 15px;border-radius:7px;cursor:pointer}
+#status{color:#94a3b8;overflow-wrap:anywhere}
+@media(max-width:500px){
+ header{padding:18px 14px}
+ h1{font-size:19px}
+ main{padding:0 12px}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .card{padding:14px}
+ .value{font-size:20px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div>
+  <h1>ZeroDown Monitoring</h1>
+  <small>Blue-Green Deployment Observability</small>
+ </div>
+ <button onclick="refresh()">Refresh</button>
+</header>
+
+<main>
+
+ <p id="status">Connecting to monitoring services...</p>
+
+ <div class="grid">
+
+  <div class="card">
+   <p>Application Health</p>
+   <div id="health" class="value yellow">Checking</div>
+  </div>
+
+  <div class="card">
+   <p>Application Version</p>
+   <div id="version" class="value blue">Checking</div>
+  </div>
+
+  <div class="card">
+   <p>CPU Usage</p>
+   <div id="cpu" class="value">Loading</div>
+  </div>
+
+  <div class="card">
+   <p>Memory Usage</p>
+   <div id="memory" class="value">Loading</div>
+  </div>
+
+  <div class="card">
+   <p>Total HTTP Requests</p>
+   <div id="requests" class="value">Loading</div>
+  </div>
+
+  <div class="card">
+   <p>Average Response Time</p>
+   <div id="latency" class="value">Loading</div>
+  </div>
+
+ </div>
+
+ <section class="card">
+  <h3>Monitoring Information</h3>
+  <p id="updated">Waiting for first update...</p>
+  <p>Prometheus: <a id="promLink" target="_blank" rel="noopener">Open Prometheus</a></p>
+  <p>Grafana: <a id="grafanaLink" target="_blank" rel="noopener">Open Grafana</a></p>
+  <p><a href="/">Customer Storefront</a> | <a href="/manager">Manager Dashboard</a></p>
+ </section>
+
+</main>
+
+<script>
+
+const HOST = window.location.hostname;
+
+document.getElementById("promLink").href =
+    `http://${HOST}:9090`;
+
+document.getElementById("grafanaLink").href =
+    `http://${HOST}:3000`;
+
+
+function show(id, value) {
+    document.getElementById(id).textContent = value;
+}
+
+
+function metric(data) {
+    return data && data.length
+        ? Number(data[0].value[1])
+        : null;
+}
+
+
+async function query(promql) {
+
+    const url =
+        "/api/monitoring/prometheus?query=" +
+        encodeURIComponent(promql);
+
+    const response = await fetch(url, {
+        cache: "no-store",
+        signal: AbortSignal.timeout(10000)
+    });
+
+    if (!response.ok) {
+        throw new Error("Prometheus proxy returned " + response.status);
+    }
+
+    const json = await response.json();
+
+    if (json.status !== "success") {
+        throw new Error("Prometheus query failed");
+    }
+
+    return json.data.result;
+}
+
+
+async function loadMetric(id, promql, formatter) {
+
+    try {
+        const result = await query(promql);
+        const value = metric(result);
+
+        show(id, value === null ? "No data" : formatter(value));
+
+    } catch (error) {
+        console.error(id + " metric error:", error);
+        show(id, "Unavailable");
+    }
+
+}
+
+
+let refreshing = false;
+
+async function refresh() {
+
+    if (refreshing) return;
+
+    refreshing = true;
+
+    show("status", "Updating monitoring data...");
+
+    try {
+
+        const [healthResult, versionResult] = await Promise.allSettled([
+
+            fetch("/health", {
+                cache: "no-store",
+                signal: AbortSignal.timeout(8000)
+            }),
+
+            fetch("/version", {
+                cache: "no-store",
+                signal: AbortSignal.timeout(8000)
+            })
+
+        ]);
+
+        if (healthResult.status === "fulfilled" &&
+            healthResult.value.ok) {
+
+            const health = await healthResult.value.json();
+
+            show("health", health.status || "UP");
+
+            document.getElementById("health").className =
+                "value green";
+
+        } else {
+
+            show("health", "Unavailable");
+
+            document.getElementById("health").className =
+                "value yellow";
+
+        }
+
+
+        if (versionResult.status === "fulfilled" &&
+            versionResult.value.ok) {
+
+            const version = await versionResult.value.json();
+
+            show("version", version.version || "Unknown");
+
+        } else {
+
+            show("version", "Unavailable");
+
+        }
+
+
+        await Promise.all([
+
+            loadMetric(
+                "cpu",
+                "rate(process_cpu_seconds_total[5m])",
+                value => (value * 100).toFixed(2) + "% of one core"
+            ),
+
+            loadMetric(
+                "memory",
+                "process_resident_memory_bytes",
+                value => (value / 1048576).toFixed(1) + " MB"
+            ),
+
+            loadMetric(
+                "requests",
+                "sum(zerodown_http_requests_total)",
+                value => value.toFixed(0)
+            ),
+
+            loadMetric(
+                "latency",
+                "rate(zerodown_http_request_duration_seconds_sum[5m]) / rate(zerodown_http_request_duration_seconds_count[5m])",
+                value => (value * 1000).toFixed(2) + " ms"
+            )
+
+        ]);
+
+        show("status", "Monitoring update completed");
+
+        show(
+            "updated",
+            "Last updated: " + new Date().toLocaleString()
+        );
+
+    } catch (error) {
+
+        console.error("Monitoring error:", error);
+
+        show("status", "Monitoring error: " + error.message);
+
+    } finally {
+
+        refreshing = false;
+
+    }
+
+}
+
+
+refresh();
+
+setInterval(refresh, 5000);
+
+</script>
+
+</body>
+</html>
